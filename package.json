@@ -1,0 +1,82 @@
+{
+  "name": "@dex/starfish-js",
+  "version": "0.0.1",
+  "description": "JavaScript client library for Ocean Eco System",
+  "main": "./dist/node/starfish.js",
+  "browser": "./dist/browser/starfish.cjs2.min.js",
+  "scripts": {
+    "test": "mocha -r ts-node/register test/sg/dex/starfish/**/*.ts",
+    "test:watch": "mocha -w --watch-extensions js,ts,json",
+    "test:cover": "nyc --report-dir coverage/unit mocha",
+    "clean": "rm -rf ./dist/ ./doc/ ./coverage ./.nyc_output",
+    "lint": "tslint -c tslint.json 'src/**/*.ts' 'test/**/*.ts'",
+    "start": "npm link @dex/starfish-js && npm run build:watch",
+    "build": "npm run clean && npm run build:tsc",
+    "build:tsc": "tsc",
+    "build:dist": "cross-env NODE_ENV=production webpack",
+    "build:watch": "tsc -w",
+    "doc": "typedoc --mode modules --out ./doc/ ./src/",
+    "report-coverage": "cat ./coverage/lcov.info | codacy-coverage --token 71ef0d15f6f04ac29b31d704b28f866a",
+    "run": "ts-node",
+    "release": "./node_modules/release-it/bin/release-it.js --src.tagName='v%s' --github.release --npm.publish --non-interactive",
+    "release-minor": "./node_modules/release-it/bin/release-it.js minor --src.tagName='v%s' --github.release --npm.publish --non-interactive",
+    "release-major": "./node_modules/release-it/bin/release-it.js major --src.tagName='v%s' --github.release --npm.publish --non-interactive",
+    "prepublishOnly": "npm run build"
+  },
+  "nyc": {
+    "include": [
+      "src/**/*.ts"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "reporter": [
+      "text-summary",
+      "lcov",
+      "html"
+    ],
+    "sourceMap": true,
+    "instrument": true
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DEX-Company/starfish-js.git"
+  },
+  "keywords": [],
+  "author": "Dex <devops@dex.sg>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/DEX-Company/starfish-js/issues"
+  },
+  "homepage": "https://github.com/DEX-Company/starfish-js#README",
+  "dependencies": {
+    "@oceanprotocol/squid": "^0.5.15",
+    "js-sha3": "^0.8.0",
+    "secure-random": "^1.1.2",
+    "typed-rest-client": "^1.5.0",
+    "typescript-map": "0.0.7"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.6",
+    "@types/node": "^11.13.2",
+    "chai": "^4.2.0",
+    "cross-env": "^5.2.0",
+    "mocha": "^6.1.2",
+    "nyc": "^14.1.0",
+    "source-map-support": "^0.5.12",
+    "tar": ">=4.4.2",
+    "truffle-hdwallet-provider": "^1.0.6",
+    "ts-node": "^8.0.3",
+    "tslint": "^5.15.0",
+    "typedoc": "^0.14.2",
+    "typescript": "^3.4.3",
+    "uglifyjs-webpack-plugin": "^2.1.2",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0",
+    "webpack-merge": "^4.2.1"
+  }
+}
